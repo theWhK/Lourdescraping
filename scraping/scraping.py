@@ -1,3 +1,4 @@
+# This Python file uses the following encoding: utf-8
 # Vars!
 debug = True
 
@@ -108,6 +109,8 @@ links = [
 	],
 ]	
 
+data = []
+data.append(['DDD', 'Modalidade', 'Título', 'Preço', 'Área', 'Tipo', 'Url'])
 # Itera sobre cada DDD
 for itemPorDDD in links:
 
@@ -123,14 +126,16 @@ for itemPorDDD in links:
 
 	# Extrai os dados de cada imóvel
 	for lu in lourdes:
-	
+		item = []
 		if (not type(lu) is None):
 		
 			# DDD
 			ddd = itemPorDDD[1]
+			item.append(ddd)
 			
 			# Modalidade de venda
 			modalidade = itemPorDDD[2]
+			item.append(modalidade)
 		
 			# Título
 			titulo = lu.find(class_="OLXad-list-title")
@@ -138,6 +143,8 @@ for itemPorDDD in links:
 				titulo = titulo.text.strip()
 			else:
 				titulo = ""
+				
+			item.append(titulo)
 			
 			# Preço
 			preco = lu.find(class_="OLXad-list-price")
@@ -151,6 +158,8 @@ for itemPorDDD in links:
 			else:
 				preco = 0.0
 				
+			item.append(preco)
+				
 			# Área
 			area = lu.find(class_="text detail-specific")
 			if area is not None:
@@ -163,6 +172,8 @@ for itemPorDDD in links:
 			else:
 				area = 0
 				
+			item.append(area)
+				
 			# Tipo
 			tipo = lu.find(class_="text detail-category")
 			if tipo is not None:
@@ -171,6 +182,8 @@ for itemPorDDD in links:
 				tipo = tipo.text.strip()
 			else:
 				tipo = ""
+				
+			item.append(tipo)
 			
 			# URL
 			url = lu.find(class_="OLXad-list-link")
@@ -179,9 +192,21 @@ for itemPorDDD in links:
 			else:
 				url = ""
 				
+			item.append(url)
+			data.append(item)
+				
 			# Print em console das infos organizadas
 			if debug:
 				print(titulo+" - "+ddd+" - "+modalidade+"\n")
 				print(url+"\n")
 				print(str(area)+" - "+tipo+"\n")
 				print(str(preco)+"\n------------\n")
+				
+				
+book = Workbook()
+sheet = book.active
+
+for row in data:
+    sheet.append(row)
+
+book.save('lourdes.xlsx')

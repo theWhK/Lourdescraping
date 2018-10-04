@@ -1,4 +1,8 @@
 # This Python file uses the following encoding: utf-8
+
+# Trabalho OA Navs: Lourdescraping
+# Por Rafael do Couto Pito, Ulisses de Souza Melo e Willian Hideki Kawabata
+
 # Vars!
 debug = True
 
@@ -109,8 +113,11 @@ links = [
 	],
 ]	
 
+# Inicializa o array multidimensional que 
+# será usado na criação da planilha
 data = []
 data.append(['DDD', 'Modalidade', 'Título', 'Preço', 'Área', 'Tipo', 'Url'])
+
 # Itera sobre cada DDD
 for itemPorDDD in links:
 
@@ -202,11 +209,16 @@ for itemPorDDD in links:
 				print(str(area)+" - "+tipo+"\n")
 				print(str(preco)+"\n------------\n")
 				
-				
+
+# Inicializa a pasta de planilhas				
 book = Workbook()
+
+# Seleciona a primeira planilha
 sheet = book.active
 
+# Insere as linhas
 for row in data:
     sheet.append(row)
 
-book.save('lourdes.xlsx')
+# Salva a planilha
+book.save('./../dataframing/lourdes.xlsx')

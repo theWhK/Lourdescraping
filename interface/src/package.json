@@ -1,0 +1,21 @@
+{
+  "name": "lordescraping",
+  "version": "1.0.0",
+  "description": "Agregador de imóveis para tomadas de decisão inteligentes",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/theWhK/Lourdescraping"
+  },
+  "author": "Willian Hideki",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-stylus": "^2.7.0"
+  }
+}

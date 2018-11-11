@@ -12,6 +12,12 @@ import pandas
 import re
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
+import mysql.connector
+import time
+
+# Timestamp
+ts = str(int(time.time()))
+tablename = "scrap_" + ts
 
 # Defs!
 def remove_prefix(text, prefix):
@@ -208,7 +214,31 @@ for itemPorDDD in links:
 				print(url+"\n")
 				print(str(area)+" - "+tipo+"\n")
 				print(str(preco)+"\n------------\n")
-				
+	
+	
+# Inicializa conexao com o Mysql
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="root",
+  database="lourdescraping"
+)
+
+mycursor = mydb.cursor()
+# sql para criar tabela
+mycursor.execute("CREATE TABLE "+ tablename +" (ddd INT(10), modalidade VARCHAR(255), titulo VARCHAR(255), preco INT(10), area INT(10), tipo VARCHAR(255), url VARCHAR(255))")
+
+# sql para inserir dados ao banco
+sql = "INSERT INTO "+ tablename +" (ddd, modalidade, titulo, preco, area, tipo, url) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+# Pega todos os elementos exceto o primeiro que é o header
+rows = data[1:]
+# Percorre as linhas executando o sql de inserção
+for row in rows:
+	mycursor.execute(sql, row)
+
+mydb.commit()
+			
 
 # Inicializa a pasta de planilhas				
 book = Workbook()

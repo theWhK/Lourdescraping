@@ -206,21 +206,51 @@ for itemPorDDD in links:
 				url = ""
 				
 			item.append(url)
+			
+			# Forma de venda
+			formaVenda = lu.find(class_="text detail-specific")
+			if formaVenda is not None:
+				formaVenda = formaVenda.text
+				ehVenda = re.findall(r"À venda", formaVenda)
+				ehAluguel = re.findall(r"Para alugar", formaVenda)
+				if len(ehVenda) > 0:
+					formaVenda = "Venda"
+				else:
+					if len(ehAluguel) > 0:
+						formaVenda = "Aluguel"
+					
+			else:
+				formaVenda = ""
+
+			item.append(formaVenda)
+
+			# Acessa a página interna do imóvel para raspar mais infos
+				# Resgata a página
+				page2 = requests.get(url)
+				content2 = page2.text
+
+				# Inicializa o BS4 com o conteúdo da página
+				soup2 = BeautifulSoup(content2, 'html.parser')
+
+				# Resgata todos os imóveis da página
+				lourdes = soup2.find(id='main-ad-list').find_all('li', 'item')
+					
+				# Print em console das infos organizadas
+				if debug:
+					print(titulo+" - "+ddd+" - "+modalidade+"\n")
+					print(url+"\n")
+					print(str(area)+" - "+tipo+"\n")
+					print(str(preco)+"\n------------\n")
+
+			# Insere o imóvel processado no conjunto
 			data.append(item)
-				
-			# Print em console das infos organizadas
-			if debug:
-				print(titulo+" - "+ddd+" - "+modalidade+"\n")
-				print(url+"\n")
-				print(str(area)+" - "+tipo+"\n")
-				print(str(preco)+"\n------------\n")
 	
 	
-# Inicializa conexao com o Mysql
+# Inicializa conexão com o MySQL
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  passwd="root",
+  passwd="",
   database="lourdescraping"
 )
 

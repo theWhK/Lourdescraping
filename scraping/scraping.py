@@ -256,10 +256,10 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 # sql para criar tabela
-mycursor.execute("CREATE TABLE "+ tablename +" (ddd INT(10), modalidade VARCHAR(255), titulo VARCHAR(255), preco INT(10), area INT(10), tipo VARCHAR(255), url VARCHAR(255))")
+mycursor.execute("CREATE TABLE "+ tablename +" (ddd INT(10), modalidade VARCHAR(255), titulo VARCHAR(255), preco INT(10), area INT(10), tipo VARCHAR(255), url VARCHAR(255), formaVenda VARCHAR(255))")
 
 # sql para inserir dados ao banco
-sql = "INSERT INTO "+ tablename +" (ddd, modalidade, titulo, preco, area, tipo, url) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+sql = "INSERT INTO "+ tablename +" (ddd, modalidade, titulo, preco, area, tipo, url, formaVenda) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 
 # Pega todos os elementos exceto o primeiro que é o header
 rows = data[1:]

@@ -117,6 +117,7 @@ links = [
 		"19",
 		"Profissional"
 	],
+	
 ]	
 
 # Inicializa o array multidimensional que 
@@ -226,21 +227,21 @@ for itemPorDDD in links:
 
 			# Acessa a página interna do imóvel para raspar mais infos
 				# Resgata a página
-				page2 = requests.get(url)
-				content2 = page2.text
+				#page2 = requests.get(url)
+				#content2 = page2.text
 
 				# Inicializa o BS4 com o conteúdo da página
-				soup2 = BeautifulSoup(content2, 'html.parser')
+				#soup2 = BeautifulSoup(content2, 'html.parser')
 
 				# Resgata todos os imóveis da página
-				lourdes = soup2.find(id='main-ad-list').find_all('li', 'item')
+				#lourdes = soup2.find(id='main-ad-list').find_all('li', 'item')
 					
 				# Print em console das infos organizadas
-				if debug:
-					print(titulo+" - "+ddd+" - "+modalidade+"\n")
-					print(url+"\n")
-					print(str(area)+" - "+tipo+"\n")
-					print(str(preco)+"\n------------\n")
+				#if debug:
+				#	print(titulo+" - "+ddd+" - "+modalidade+"\n")
+				#	print(url+"\n")
+				#	print(str(area)+" - "+tipo+"\n")
+				#	print(str(preco)+"\n------------\n")
 
 			# Insere o imóvel processado no conjunto
 			data.append(item)
@@ -248,9 +249,9 @@ for itemPorDDD in links:
 	
 # Inicializa conexão com o MySQL
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  passwd="",
+  host="172.18.0.2",
+  user="test",
+  passwd="password",
   database="lourdescraping"
 )
 

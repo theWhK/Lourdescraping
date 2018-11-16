@@ -18,6 +18,8 @@ import time
 # Timestamp
 ts = str(int(time.time()))
 tablename = "scrap_" + ts
+pageNumber = 1
+maxPageNumber = 10
 
 # Defs!
 def remove_prefix(text, prefix):
@@ -28,92 +30,92 @@ def remove_prefix(text, prefix):
 # Lista com links para iterar
 links = [
 	[
-		"https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/aluguel?f=p&o=",
 		"11",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/sao-paulo-e-regiao/imoveis/aluguel?f=c&o=",
 		"11",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/aluguel?f=p&o=",
 		"12",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/vale-do-paraiba-e-litoral-norte/imoveis/aluguel?f=c&o=",
 		"12",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/baixada-santista-e-litoral-sul/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/baixada-santista-e-litoral-sul/imoveis/aluguel?f=p&o=",
 		"13",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/baixada-santista-e-litoral-sul/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/baixada-santista-e-litoral-sul/imoveis/aluguel?f=c&o=",
 		"13",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-bauru-e-marilia/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/regiao-de-bauru-e-marilia/imoveis/aluguel?f=p&o=",
 		"14",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-bauru-e-marilia/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/regiao-de-bauru-e-marilia/imoveis/aluguel?f=c&o=",
 		"14",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-sorocaba/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/regiao-de-sorocaba/imoveis/aluguel?f=p&o=",
 		"15",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-sorocaba/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/regiao-de-sorocaba/imoveis/aluguel?f=c&o=",
 		"15",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-ribeirao-preto/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/regiao-de-ribeirao-preto/imoveis/aluguel?f=p&o=",
 		"16",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-ribeirao-preto/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/regiao-de-ribeirao-preto/imoveis/aluguel?f=c&o=",
 		"16",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-sao-jose-do-rio-preto/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/regiao-de-sao-jose-do-rio-preto/imoveis/aluguel?f=p&o=",
 		"17",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-sao-jose-do-rio-preto/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/regiao-de-sao-jose-do-rio-preto/imoveis/aluguel?f=c&o=",
 		"17",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-presidente-prudente/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/regiao-de-presidente-prudente/imoveis/aluguel?f=p&o=",
 		"18",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/regiao-de-presidente-prudente/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/regiao-de-presidente-prudente/imoveis/aluguel?f=c&o=",
 		"18",
 		"Profissional"
 	],
 	[
-		"https://sp.olx.com.br/grande-campinas/imoveis/aluguel?f=p",
+		"https://sp.olx.com.br/grande-campinas/imoveis/aluguel?f=p&o=",
 		"19",
 		"Particular"
 	],
 	[
-		"https://sp.olx.com.br/grande-campinas/imoveis/aluguel?f=c",
+		"https://sp.olx.com.br/grande-campinas/imoveis/aluguel?f=c&o=",
 		"19",
 		"Profissional"
 	],
@@ -127,124 +129,139 @@ data.append(['DDD', 'Modalidade', 'Título', 'Preço', 'Área', 'Tipo', 'Url'])
 
 # Itera sobre cada DDD
 for itemPorDDD in links:
+	pageNumber = 1
 
-	# Resgata a página
-	page = requests.get(itemPorDDD[0])
-	content = page.text
-
-	# Inicializa o BS4 com o conteúdo da página
-	soup = BeautifulSoup(content, 'html.parser')
-
-	# Resgata todos os imóveis da página
-	lourdes = soup.find(id='main-ad-list').find_all('li', 'item')
-
-	# Extrai os dados de cada imóvel
-	for lu in lourdes:
-		item = []
-		if (not type(lu) is None):
+	#Percorre o numero de paginação fornecido
+	while pageNumber <= maxPageNumber:
+		# Resgata a página + numero da paginação
+		page = requests.get(itemPorDDD[0]+ str(pageNumber))
 		
-			# DDD
-			ddd = itemPorDDD[1]
-			item.append(ddd)
-			
-			# Modalidade de venda
-			modalidade = itemPorDDD[2]
-			item.append(modalidade)
-		
-			# Título
-			titulo = lu.find(class_="OLXad-list-title")
-			if titulo is not None:
-				titulo = titulo.text.strip()
-			else:
-				titulo = ""
+		# Se a pagina existir irá efetuar o scrap, caso contrário pula para o proximo DDD
+		if page.status_code == 200:
+			content = page.text
+
+			# Inicializa o BS4 com o conteúdo da página
+			soup = BeautifulSoup(content, 'html.parser')
+
+			# Resgata todos os imóveis da página
+			lourdes = soup.find(id='main-ad-list').find_all('li', 'item')
+
+			# Extrai os dados de cada imóvel
+			for lu in lourdes:
+				item = []
+				if (not type(lu) is None):
 				
-			item.append(titulo)
-			
-			# Preço
-			preco = lu.find(class_="OLXad-list-price")
-			if preco is not None:
-				preco = preco.text
-				preco = remove_prefix(preco, " ")
-				preco = remove_prefix(preco, "R$ ")
-				preco = preco.replace(".","")
-				preco = preco.replace(",",".")
-				preco = float(preco)
-			else:
-				preco = 0.0
+					# DDD
+					ddd = itemPorDDD[1]
+					item.append(ddd)
+					
+					# Modalidade de venda
+					modalidade = itemPorDDD[2]
+					item.append(modalidade)
 				
-			item.append(preco)
-				
-			# Área
-			area = lu.find(class_="text detail-specific")
-			if area is not None:
-				area = area.text
-				area = re.findall(r"(\d+) m²", area)
-				if len(area) > 0:
-					area = area[0]
-				else:
-					area = 0
-			else:
-				area = 0
-				
-			item.append(area)
-				
-			# Tipo
-			tipo = lu.find(class_="text detail-category")
-			if tipo is not None:
-				for child in tipo.find_all("span"):
-					child.decompose()
-				tipo = tipo.text.strip()
-			else:
-				tipo = ""
-				
-			item.append(tipo)
-			
-			# URL
-			url = lu.find(class_="OLXad-list-link")
-			if url is not None:
-				url = url['href']
-			else:
-				url = ""
-				
-			item.append(url)
-			
-			# Forma de venda
-			formaVenda = lu.find(class_="text detail-specific")
-			if formaVenda is not None:
-				formaVenda = formaVenda.text
-				ehVenda = re.findall(r"À venda", formaVenda)
-				ehAluguel = re.findall(r"Para alugar", formaVenda)
-				if len(ehVenda) > 0:
-					formaVenda = "Venda"
-				else:
-					if len(ehAluguel) > 0:
+					# Título
+					titulo = lu.find(class_="OLXad-list-title")
+					if titulo is not None:
+						titulo = titulo.text.strip()
+					else:
+						titulo = ""
+						
+					item.append(titulo)
+					
+					# Preço
+					preco = lu.find(class_="OLXad-list-price")
+					if preco is not None:
+						preco = preco.text
+						preco = remove_prefix(preco, " ")
+						preco = remove_prefix(preco, "R$ ")
+						preco = preco.replace(".","")
+						preco = preco.replace(",",".")
+						preco = float(preco)
+					else:
+						preco = 0.0
+						
+					item.append(preco)
+						
+					# Área
+					area = lu.find(class_="text detail-specific")
+					if area is not None:
+						area = area.text
+						area = re.findall(r"(\d+) m²", area)
+						if len(area) > 0:
+							area = area[0]
+						else:
+							area = 0
+					else:
+						area = 0
+						
+					item.append(area)
+						
+					# Tipo
+					tipo = lu.find(class_="text detail-category")
+					if tipo is not None:
+						for child in tipo.find_all("span"):
+							child.decompose()
+						tipo = tipo.text.strip()
+					else:
+						tipo = ""
+						
+					item.append(tipo)
+					
+					# URL
+					url = lu.find(class_="OLXad-list-link")
+					if url is not None:
+						url = url['href']
+					else:
+						url = ""
+						
+					item.append(url)
+					
+					# Forma de venda
+					#formaVenda = lu.find(class_="text detail-specific")
+					#if formaVenda is not None:
+						#formaVenda = formaVenda.text
+						#ehVenda = re.findall(r"À venda", formaVenda)
+						#ehAluguel = re.findall(r"Para alugar", formaVenda)
+					if preco > 10000:
+						formaVenda = "Venda"
+					else:
+						#if len(ehAluguel) > 0:
 						formaVenda = "Aluguel"
+							
+					#else:
+					#	formaVenda = ""
+
+					item.append(formaVenda)
+
+					# Acessa a página interna do imóvel para raspar mais infos
+						# Resgata a página
+						#page2 = requests.get(url)
+						#content2 = page2.text
+
+						# Inicializa o BS4 com o conteúdo da página
+						#soup2 = BeautifulSoup(content2, 'html.parser')
+
+						# Resgata todos os imóveis da página
+						#lourdes = soup2.find(id='main-ad-list').find_all('li', 'item')
+							
+						# Print em console das infos organizadas
+						#if debug:
+						#	print(titulo+" - "+ddd+" - "+modalidade+"\n")
+						#	print(url+"\n")
+						#	print(str(area)+" - "+tipo+"\n")
+						#	print(str(preco)+"\n------------\n")
+
+					# Insere o imóvel processado no conjunto
 					
-			else:
-				formaVenda = ""
-
-			item.append(formaVenda)
-
-			# Acessa a página interna do imóvel para raspar mais infos
-				# Resgata a página
-				#page2 = requests.get(url)
-				#content2 = page2.text
-
-				# Inicializa o BS4 com o conteúdo da página
-				#soup2 = BeautifulSoup(content2, 'html.parser')
-
-				# Resgata todos os imóveis da página
-				#lourdes = soup2.find(id='main-ad-list').find_all('li', 'item')
+					if preco > 0:
+						data.append(item)
 					
-				# Print em console das infos organizadas
-				#if debug:
-				#	print(titulo+" - "+ddd+" - "+modalidade+"\n")
-				#	print(url+"\n")
-				#	print(str(area)+" - "+tipo+"\n")
-				#	print(str(preco)+"\n------------\n")
-
-			# Insere o imóvel processado no conjunto
-			data.append(item)
+			# incrementa o pageNumber para percorrer a proxima paginação
+			pageNumber += 1
+		
+		#se nao existir é jogava um valor maior que o maxPageNumber para sair do while
+		else:
+			pageNumber = maxPageNumber + 1
 	
 	
 # Inicializa conexão com o MySQL

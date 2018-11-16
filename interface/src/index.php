@@ -37,6 +37,7 @@
                             <option value="11">11</option>
                             <option value="13">13</option>
                             <option value="14">14</option>
+                            <option value="Todos">Todos</option>
                         </select>
                     </div>
                     <div class="cell small-12 medium-3">
@@ -50,13 +51,14 @@
                     <div class="cell small-12 medium-3">
                         <label for="tipo">Selecione o Tipo:</label>
                         <select name="tipo" id="tipo">
-                            <option value="Casa">Casa</option>
-                            <option value="Apartamento">Apartamento</option>
+                            <option value="Casas">Casa</option>
+                            <option value="Apartamentos">Apartamento</option>
+                            <option value="Ambos">Ambos</option>
                         </select>
                     </div>
                     <div class="cell small-12 medium-3">
                         <label for="forma">Selecione a Forma:</label>
-                        <select name="forma" id="forma">
+                        <select name="formaVenda" id="forma">
                             <option value="Venda">Venda</option>
                             <option value="Aluguel">Aluguel</option>
                             <option value="Ambos">Ambos</option>
@@ -64,6 +66,7 @@
                     </div>
                     <div class="cell small-12 medium-3">
                         <button class="button" type="submit">Filtrar</button>
+                        <a class="button" href="/lourdescraping/interface/src">Limpar Filtros</a>
                     </div>
                 </div>
             </div>
@@ -71,54 +74,107 @@
     </section>
 
     <!-- Relatório Básico -->
-    <section class="relatorio-basico-wrapper">
-        <div class="grid-container">
-            <div class="grid-x grid-margin-x grid-margin-y">
-                <div class="cell small-12 medium-4">
-                    <div class="bloco-info-box">
-                        <div class="grid-x">
-                            <div class="cell small-12 medium-3">
-                                <i class="icone fas fa-money-check-alt"></i>
-                            </div>
-                            <div class="cell small-12 medium-9">
-                                <h4 class="rotulo">Preço do m²</h4>
-                                <span class="info">R$ 3.500,00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cell small-12 medium-4">
-                    <div class="bloco-info-box">
-                        <div class="grid-x">
-                            <div class="cell small-12 medium-3">
-                                <i class="icone fas fa-money-check-alt"></i>
-                            </div>
-                            <div class="cell small-12 medium-9">
-                                <h4 class="rotulo">Preço médio</h4>
-                                <span class="info">R$ 365.000,00</span>
+    <?php if ($formaVenda != "Aluguel"){ ?>
+        <section class="relatorio-basico-wrapper">
+            <div class="grid-container">
+                <h3>Dados das casas para venda</h3>
+                <div class="grid-x grid-margin-x grid-margin-y">
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">Preço do m²</h4>
+                                    <span class="info">R$ <?php echo str_replace('.', ',', round($precoMedioDoMetroQuadradoVendaTotal, 2)) ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="cell small-12 medium-4">
-                    <div class="bloco-info-box">
-                        <div class="grid-x">
-                            <div class="cell small-12 medium-3">
-                                <i class="icone fas fa-money-check-alt"></i>
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">Preço médio</h4>
+                                    <span class="info">R$ <?php echo str_replace('.', ',', round($precoMedioVenda, 2)) ?></span>
+                                </div>
                             </div>
-                            <div class="cell small-12 medium-9">
-                                <h4 class="rotulo">quant. de imóveis analisados</h4>
-                                <span class="info"><?php echo $count ?></span>
+                        </div>
+                    </div>
+
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">quant. de imóveis analisados</h4>
+                                    <span class="info"><?php echo $quantidadeDeCasasParaVender ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <?php echo var_dump($rows); ?>
+        </section>
+    <?php } ?>
+
+    <?php if ($formaVenda != "Venda"){ ?>
+        <section class="relatorio-basico-wrapper">
+            <div class="grid-container">
+                <h3>Dados das casas para aluguel</h3>
+                <div class="grid-x grid-margin-x grid-margin-y">
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">Preço do m²</h4>
+                                    <span class="info">R$ <?php echo str_replace('.', ',', round($precoMedioDoMetroQuadradoAluguelTotal, 2)) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">Preço médio</h4>
+                                    <span class="info">R$ <?php echo str_replace('.', ',', round($precoMedioAluguel, 2)) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell small-12 medium-4">
+                        <div class="bloco-info-box">
+                            <div class="grid-x">
+                                <div class="cell small-12 medium-3">
+                                    <i class="icone fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="cell small-12 medium-9">
+                                    <h4 class="rotulo">quant. de imóveis analisados</h4>
+                                    <span class="info"><?php echo $quantidadeDeCasasParaAlugar ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php } ?>
     
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
